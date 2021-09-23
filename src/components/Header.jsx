@@ -6,7 +6,7 @@ const Header = () => {
 
   return (
     <header>
-      <div>Favorite football teams</div>
+      <div>Todos:</div>
       <nav>
         <ul>
           <li>
