@@ -14,7 +14,7 @@ const ShowTodos = () => {
     });
   }, []);
   return (
-    <section>
+    <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
       {todosState.todos ? (
         todosState.todos.map((todo) => (
           <Todo

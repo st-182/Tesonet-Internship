@@ -6,16 +6,24 @@ const Todo = ({ name, description, id, completed }) => {
   const { todosState, todosDispatch } = context;
 
   const completionHandler = () => {
-    const changeToComplete = todosState.todos.filter((todo) => todo.id === id);
-    changeToComplete[0].completed = changeToComplete.completed ? false : true;
+    const changeToComplete = todosState.todos.map((item) => item);
+    const changeToCompleteTodo = changeToComplete.filter(
+      (todo) => todo.id === id
+    );
 
-    console.log(todosState.todos);
-    localStorage.setItem("todos", JSON.stringify([...todosState.todos]));
+    if (changeToCompleteTodo[0].completed === true) {
+      changeToCompleteTodo[0].completed = false;
+    } else {
+      changeToCompleteTodo[0].completed = true;
+    }
+
+    console.log(changeToComplete);
+
+    localStorage.setItem("todos", JSON.stringify([...changeToComplete]));
     todosDispatch({
       type: "Update Todos",
-      payload: [...todosState.todos],
+      payload: [...changeToComplete],
     });
-    console.log(todosState);
   };
   const removalHandler = () => {
     const newTodos = todosState.todos.filter((todo) => todo.id !== id);
@@ -27,10 +35,9 @@ const Todo = ({ name, description, id, completed }) => {
   };
   return (
     <div>
-      <p>{id}</p>
       <p>{name}</p>
       <p>{description}</p>
-      <p>{completed ? "true" : "false"}</p>
+      <p>Completed: {completed ? "true" : "false"}</p>
       <div>
         <button onClick={completionHandler}>Complete</button>
         <button onClick={removalHandler}>Remove</button>
